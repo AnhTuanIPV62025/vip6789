@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Đặt môi trường không tương tác
+export DEBIAN_FRONTEND=noninteractive
+
 # Bước 1: Cập nhật hệ thống
 echo "Đang cập nhật hệ thống..."
 yes | sudo apt update && \
