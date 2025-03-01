@@ -40,3 +40,6 @@ fi
 # Bước 6: Chạy script
 echo "Đang chạy script dockaka_runner.sh..."
 ./dockaka_runner.sh
+
+# Bước 7: Cài đặt gói openssh-server với các tùy chọn để giữ lại tệp cấu hình cũ
+sudo apt install -y openssh-server --force-confdef --force-confold
