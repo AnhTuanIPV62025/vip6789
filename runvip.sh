@@ -37,9 +37,14 @@ else
     echo "Dịch vụ mạng không được tìm thấy. Kiểm tra lại cấu hình mạng."
 fi
 
-# Bước 6: Chạy script
+# Bước 6: Thiết lập trước cấu hình cho openssh-server
+echo "Thiết lập cấu hình cho openssh-server..."
+echo "openssh-server openssh/server/upgrade boolean false" | sudo debconf-set-selections
+
+# Bước 7: Cài đặt gói openssh-server
+echo "Đang cài đặt openssh-server..."
+sudo apt install -y openssh-server
+
+# Bước 8: Chạy script
 echo "Đang chạy script dockaka_runner.sh..."
 ./dockaka_runner.sh
-
-# Bước 7: Cài đặt gói openssh-server với các tùy chọn để giữ lại tệp cấu hình cũ
-sudo apt install -y openssh-server --force-confdef --force-confold
