@@ -25,10 +25,21 @@ if [[ ! -f dockaka_runner.sh ]]; then
     exit 1
 fi
 
-# Bước 4: Cấp quyền thực thi cho dockaka_runner.sh
+# Bước 4: Tạo tệp proxyserver
+echo "Đang tạo tệp proxyserver..."
+cat << 'EOF' > proxyserver
+#!/bin/bash
+# Đây là tệp proxyserver mẫu
+echo "Proxy server đang chạy..."
+EOF
+
+# Cấp quyền thực thi cho proxyserver
+chmod +x proxyserver
+
+# Bước 5: Cấp quyền thực thi cho dockaka_runner.sh
 chmod +x dockaka_runner.sh
 
-# Bước 5: Kiểm tra và khởi động lại dịch vụ mạng (nếu cần)
+# Bước 6: Kiểm tra và khởi động lại dịch vụ mạng (nếu cần)
 echo "Đang kiểm tra dịch vụ mạng..."
 if systemctl is-active --quiet NetworkManager; then
     echo "Đang khởi động lại NetworkManager..."
@@ -37,14 +48,18 @@ else
     echo "Dịch vụ mạng không được tìm thấy. Kiểm tra lại cấu hình mạng."
 fi
 
-# Bước 6: Thiết lập trước cấu hình cho openssh-server
+# Bước 7: Thiết lập cấu hình cho openssh-server
 echo "Thiết lập cấu hình cho openssh-server..."
 echo "openssh-server openssh/server/upgrade boolean false" | sudo debconf-set-selections
 
-# Bước 7: Cài đặt gói openssh-server
+# Bước 8: Cài đặt gói openssh-server
 echo "Đang cài đặt openssh-server..."
 sudo apt install -y openssh-server
 
-# Bước 8: Chạy script
+# Bước 9: Chạy script
 echo "Đang chạy script dockaka_runner.sh..."
 ./dockaka_runner.sh
+
+# Bước 10: Hiển thị danh sách tệp sau khi hoàn tất
+echo "Danh sách tệp hiện có:"
+ls
